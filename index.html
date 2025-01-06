@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced OCR System</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/4.1.1/tesseract.min.js"></script>
+    
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <i class="fas fa-eye"></i>
+                <span>SwiftOCR</span>
+            </div>
+            <nav class="main-nav">
+                <a href="#" class="active"><i class="fas fa-home"></i> Home</a>
+                <a href="#"><i class="fas fa-history"></i> History</a>
+                <a href="#"><i class="fas fa-cog"></i> Settings</a>
+                <a href="#"><i class="fas fa-question-circle"></i> Help</a>
+            </nav>
+            <div class="user-menu">
+                <i class="fas fa-user-circle"></i>
+                <span>User Account</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="dashboard">
+            <div class="stats-bar">
+                <div class="stat-item">
+                    <i class="fas fa-file-alt"></i>
+                    <span class="stat-number">0</span>
+                    <span class="stat-label">Processed</span>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-clock"></i>
+                    <span class="stat-number">0s</span>
+                    <span class="stat-label">Avg. Time</span>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-language"></i>
+                    <span class="stat-number">1</span>
+                    <span class="stat-label">Languages</span>
+                </div>
+            </div>
+
+            <div class="workspace">
+                <div class="tools-panel">
+                    <button class="tool-btn" id="uploadBtn">
+                        <i class="fas fa-upload"></i>
+                        Upload
+                    </button>
+                    <button class="tool-btn" id="captureBtn">
+                        <i class="fas fa-camera"></i>
+                        Capture
+                    </button>
+                    <button class="tool-btn" id="pasteBtn">
+                        <i class="fas fa-paste"></i>
+                        Paste
+                    </button>
+                    <div class="language-select">
+                        <i class="fas fa-globe"></i>
+                        <select id="langSelect">
+                            <option value="eng">English</option>
+                            <option value="fra">French</option>
+                            <option value="deu">German</option>
+                            <option value="spa">Spanish</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="content-area">
+                    <div class="drop-zone" id="dropZone">
+                        <div class="drop-zone-content">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p class="drop-zone-text">Drop image here or click to upload</p>
+                            <p class="drop-zone-formats">Supports: JPG, PNG, BMP, GIF</p>
+                            <input type="file" id="fileInput" hidden accept="image/*">
+                        </div>
+                        <img id="previewImage" class="preview-image" alt="Preview">
+                    </div>
+
+                    <div class="processing-overlay" id="processingOverlay">
+                        <div class="processing-content">
+                            <div class="spinner"></div>
+                            <p>Processing Image</p>
+                            <div class="progress-bar">
+                                <div class="progress" id="progressBar"></div>
+                            </div>
+                            <p id="statusText">Initializing...</p>
+                        </div>
+                    </div>
+
+                    <div class="result-container">
+                        <div class="result-header">
+                            <h3>Extracted Text</h3>
+                            <div class="result-actions">
+                                <button class="action-btn" id="copyBtn">
+                                    <i class="fas fa-copy"></i> Copy
+                                </button>
+                                <button class="action-btn" id="downloadBtn">
+                                    <i class="fas fa-download"></i> Download
+                                </button>
+                                <button class="action-btn" id="speakBtn">
+                                    <i class="fas fa-volume-up"></i> Speak
+                                </button>
+                                <button class="tool-btn" id="autoEnhanceBtn">
+                                    <i class="fas fa-magic"></i>
+                                    Auto Enhance
+                                </button>
+                            </div>
+                        </div>
+                        <div class="result-area" id="resultArea">
+                            Extracted text will appear here...
+                        </div>
+                    </div>
+                </div>
+
+                <div class="side-panel">
+                    <div class="image-settings">
+                        <h3>Image Settings</h3>
+                        <div class="setting-item">
+                            <label>Brightness</label>
+                            <input type="range" id="brightness" min="0" max="200" value="100">
+                        </div>
+                        <div class="setting-item">
+                            <label>Contrast</label>
+                            <input type="range" id="contrast" min="0" max="200" value="100">
+                        </div>
+                        <div class="setting-item">
+                            <label>Threshold</label>
+                            <input type="range" id="threshold" min="0" max="255" value="128">
+                        </div>
+                    </div>
+                    <div class="history-panel">
+                        <h3>Recent Scans</h3>
+                        <div class="history-list" id="historyList">
+                            <!-- History items will be added here dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>About SwiftOCR</h4>
+                <p>Advanced OCR solution for all your text extraction needs</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <a href="#">Documentation</a>
+                <a href="#">API Access</a>
+                <a href="#">Support</a>
+            </div>
+            <div class="footer-section">
+                <h4>Connect</h4>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 SwiftOCR. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <div class="toast" id="toast"></div>
+    <script src="script.js"></script>
+</body>
+</html>
